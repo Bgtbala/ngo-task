@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/wedogood_assignments
+      - JWT_SECRET=dockersecret
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin123
+    depends_on:
+      - mongo
+    volumes:
+      - ./uploads:/app/uploads
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
